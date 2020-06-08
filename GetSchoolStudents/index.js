@@ -1,20 +1,29 @@
 const withTokenAuth = require('../lib/token-auth')
 const { getSchool } = require('../lib/api/schools')
 const { getStudents } = require('../lib/api/students')
+const repackStudent = require('../lib/repack-student')
 
 const returnSchool = async function (context, req) {
   const caller = req.token.caller
   const { id } = context.bindingData
 
   try {
-    const schools = await getSchool(context, id)
-    const students = await getStudents(context, {
-      schoolIds: schools[0].id
-    })
+    const school = await getSchool(context, id)
+    if(!school) {
+      context.res = {
+        status: 404,
+        body: `School not found: ${id}`
+      }
+      return
+    }
+
+    const students = await getStudents(context, { schoolIds: school.id })
 
     context.log.info(['api', 'school', id, 'students', caller, 'length', students.length])
+
+    const repackedStudents = students.map((student) => repackStudent(context, student))
     context.res = {
-      body: students
+      body: repackedStudents
     }
   } catch (error) {
     context.log.error(['api', 'school', id, 'students', caller, 'error', error.message])
