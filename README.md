@@ -3,9 +3,72 @@
 
 # minelev-pifu-api
 
-Buddy compatible api service for MinElev
+Api service for MinElev, using data from [minelev-pifu-tools](https://github.com/telemark/minelev-pifu-tools)
 
 ## API
+
+All API calls needs an Authorization header with valid jwt  
+
+### ```GET /students?name={name}```
+
+Search all your students
+
+### ```GET /students/{id}```
+
+Get a specific student
+
+### ```GET /students/{id}/contactteachers```
+
+Get all contact teacher for a given student
+
+### ```GET /teachers```
+
+Get all teachers
+
+### ```GET /teachers/{id}```
+
+Get a given teacher
+
+### ```GET /teachers/{id}/contactclasses```
+
+Get all contact classes for a given teacher
+
+### ```GET /teachers/{id}/students```
+
+Get all students for a given teacher
+
+### ```GET /classes```
+
+Get all classes
+
+### ```GET /classes/{id}```
+
+Get a given class
+
+### ```GET /classes/{id}/students```
+
+Get all students in a class
+
+### ```GET /classes/{id}/teachers```
+
+Get all teachers in a class
+
+### ```GET /schools```
+
+Get all schools
+
+### ```GET /schools/{id}```
+
+Get a given school
+
+### ```GET /schools/{id}/teachers```
+
+Get all teachers for a given school
+
+### ```Get /schools/{id}/students```
+
+Get all students for a given school
+
 
 ### ```Get /ping```
 
