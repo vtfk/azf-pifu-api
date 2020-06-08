@@ -1,6 +1,7 @@
 const withTokenAuth = require('../lib/token-auth')
 const { getClass } = require('../lib/api/classes')
 const { getTeachers } = require('../lib/api/teachers')
+const repackTeacher = require('../lib/repack-teacher')
 
 const returnClasses = async function (context, req) {
   const caller = req.token.caller
@@ -17,13 +18,14 @@ const returnClasses = async function (context, req) {
     }
 
     const teachers = await getTeachers(context, { groupIds: classes.id })
-    context.log.info(['api', 'class', id, 'teachers', caller, 'length', teachers.length])
-
+    context.log.info(['pifu-api', 'class', id, 'teachers', caller, 'length', teachers.length])
+    
+    const repackedTeachers = teachers.map((teacher) => repackTeacher(context, teacher))
     context.res = {
-      body: teachers
+      body: repackedTeachers
     }
   } catch (error) {
-    context.log.error(['api', 'class', id, 'teachers', caller, 'error', error.message])
+    context.log.error(['pifu-api', 'class', id, 'teachers', caller, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message
