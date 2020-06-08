@@ -7,10 +7,16 @@ const returnSchool = async function (context, req) {
   const { id } = context.bindingData
 
   try {
-    const schools = await getSchool(context, id)
-    const teachers = await getTeachers(context, {
-      schoolIds: schools[0].id
-    })
+    const school = await getSchool(context, id)
+    if(!school) {
+      context.res = {
+        status: 404,
+        body: `School not found: ${id}`
+      }
+      return
+    }
+
+    const teachers = await getTeachers(context, { schoolIds: school.id })
 
     context.log.info(['api', 'school', id, 'teachers', caller, 'length', teachers.length])
     context.res = {
