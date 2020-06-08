@@ -9,7 +9,7 @@ const returnClasses = async function (context, req) {
 
   try {
     const classes = await getClass(context, id)
-    if(!classes) {
+    if (!classes) {
       context.res = {
         status: 404,
         body: `Class not found: ${id}`
@@ -19,7 +19,7 @@ const returnClasses = async function (context, req) {
 
     const teachers = await getTeachers(context, { groupIds: classes.id })
     context.log.info(['pifu-api', 'class', id, 'teachers', caller, 'length', teachers.length])
-    
+
     const repackedTeachers = teachers.map((teacher) => repackTeacher(context, teacher))
     context.res = {
       body: repackedTeachers

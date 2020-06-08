@@ -6,14 +6,14 @@ const returnSchools = async function (context, request) {
 
   try {
     const schools = await getSchools(context)
-    if(!schools || schools.length <= 0) {
+    if (!schools || schools.length <= 0) {
       context.res = {
         status: 404,
-        body: `No schools found.`
+        body: 'No schools found.'
       }
       return
     }
-    
+
     context.log(['pifu-api', 'schools', caller, 'length', schools.length])
     context.res = {
       body: schools

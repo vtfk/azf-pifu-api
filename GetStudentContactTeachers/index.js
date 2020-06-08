@@ -8,10 +8,10 @@ const returnStudents = async function (context, req) {
   const { id } = context.bindingData
 
   // Verify that we got a caller!
-  if(!caller) {
+  if (!caller) {
     context.res = {
       status: 403,
-      body: `Couldn't read caller from token!`
+      body: 'Couldn\'t read caller from token!'
     }
     return
   }
@@ -19,7 +19,7 @@ const returnStudents = async function (context, req) {
   try {
     // Get students matching the provided username
     const student = await getStudent(context, id)
-    if(!student) {
+    if (!student) {
       context.log.warn(['pifu-api', 'student', caller, 'get contactteachers', 'student not found', id])
       context.res = {
         status: 404,
@@ -27,7 +27,7 @@ const returnStudents = async function (context, req) {
       }
       return
     }
-    
+
     const { kontaktlarergruppeIds, ordenIds, atferdIds } = student
     const kontaktIds = [...kontaktlarergruppeIds, ...ordenIds, ...atferdIds]
 
@@ -35,7 +35,6 @@ const returnStudents = async function (context, req) {
     const teachers = await getTeachers(context, {
       groupIds: { $in: kontaktIds }
     })
-
 
     context.log(['pifu-api', 'students', caller, 'get contactteachers', student.username])
     const repackedTeachers = teachers.map((teacher) => repackTeacher(context, teacher))

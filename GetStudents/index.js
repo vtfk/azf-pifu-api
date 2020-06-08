@@ -5,13 +5,13 @@ const repackStudent = require('../lib/repack-student')
 
 const returnStudents = async function (context, req) {
   const { caller } = req.token
-  const name = req.query.name || "*"
+  const name = req.query.name || '*'
 
   // Verify that we got a caller!
-  if(!caller) {
+  if (!caller) {
     context.res = {
       status: 403,
-      body: `Couldn't read caller from token!`
+      body: 'Couldn\'t read caller from token!'
     }
     return
   }
@@ -19,7 +19,7 @@ const returnStudents = async function (context, req) {
   try {
     // Get teacher from caller
     const teacher = await getTeacher(context, caller)
-    if(!teacher) {
+    if (!teacher) {
       context.log.warn(['pifu-api', 'students', caller, 'search by name', 'teacher not found'])
       context.res = {
         status: 403,
@@ -27,8 +27,8 @@ const returnStudents = async function (context, req) {
       }
       return
     }
-    
-    if(!teacher.groupIds || teacher.groupIds.length === 0) {
+
+    if (!teacher.groupIds || teacher.groupIds.length === 0) {
       context.log.warn(['pifu-api', 'students', caller, 'search by name', 'teacher has no group'])
       context.res = {
         body: []

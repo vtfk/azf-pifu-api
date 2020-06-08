@@ -9,7 +9,7 @@ const returnSchool = async function (context, req) {
 
   try {
     const school = await getSchool(context, id)
-    if(!school) {
+    if (!school) {
       context.res = {
         status: 404,
         body: `School not found: ${id}`
