@@ -6,11 +6,18 @@ const returnSchool = async function (context, req) {
   const { id } = context.bindingData
 
   try {
-    const schools = await getSchool(context, id)
+    const school = await getSchool(context, id)
+    if(!school) {
+      context.res = {
+        status: 404,
+        body: `School not found: ${id}`
+      }
+      return
+    }
 
-    context.log.info(['pifu-api', 'school', id, caller, 'length', schools.length])
+    context.log.info(['pifu-api', 'school', id, caller, 'length', school.id])
     context.res = {
-      body: schools
+      body: [school]
     }
   } catch (error) {
     context.log.error(['pifu-api', 'school', id, caller, 'error', error.message])
