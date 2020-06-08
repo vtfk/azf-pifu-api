@@ -5,8 +5,6 @@ const returnSchools = async function (context, request) {
   const caller = request.token.caller
 
   try {
-    context.log(['pifu-api', 'schools', caller])
-
     const schools = await getSchools(context)
 
     context.log(['pifu-api', 'schools', caller, 'length', schools.length])
