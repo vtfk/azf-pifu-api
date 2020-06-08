@@ -84,9 +84,9 @@ Add a local `local.settings.json` file with this content:
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "",
-    "PAPERTRAIL_HOST": "",
-    "PAPERTRAIL_PORT": "",
-    "PAPERTRAIL_HOSTNAME": "",
+    "PAPERTRAIL_HOST": "papertrails.com",
+    "PAPERTRAIL_PORT": "1234",
+    "PAPERTRAIL_HOSTNAME": "minelev-pifu-api",
     "MONGODB_CONNECTION": "mongodb://username:password@server",
     "MONGODB_DATABASE": "minelev",
     "MONGODB_COLLECTION": "pifu",
