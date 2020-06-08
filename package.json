@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "func start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard && npm audit && ava",
+    "test-offline": "standard && ava"
   },
   "keywords": [],
   "author": "Mats Andreassen <mats.andreassen@vtfk.no> (https://github.com/matsand)",
@@ -16,5 +17,9 @@
     "vtfk-schools-info": "1.1.0",
     "winston": "3.2.1",
     "winston-papertrail": "1.0.5"
+  },
+  "devDependencies": {
+    "ava": "3.8.2",
+    "standard": "14.3.4"
   }
 }
