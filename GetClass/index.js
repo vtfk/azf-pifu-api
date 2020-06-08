@@ -7,10 +7,17 @@ const returnClass = async function (context, req) {
 
   try {
     const classes = await getClass(context, id)
+    if(!classes) {
+      context.res = {
+        status: 404,
+        body: `No classes was found: ${id}`
+      }
+      return
+    }
 
     context.log.info(['api', 'class', id, caller, 'length', classes.length])
     context.res = {
-      body: classes
+      body: [classes]
     }
   } catch (error) {
     context.log.error(['api', 'class', id, caller, 'error', error.message])
