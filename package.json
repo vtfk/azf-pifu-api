@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "func start",
+    "start": "func start",
     "test": "standard && npm audit && ava",
-    "test-offline": "standard && ava"
+    "test-offline": "standard && ava",
+    "coverage": "nyc ava",
+    "coveralls": "nyc ava && nyc report --reporter=lcov && cat coverage/lcov.info | coveralls",
+    "standard-fix": "standard --fix",
+    "refresh": "rm -rf node_modules && rm package-lock.json && npm install"
   },
   "keywords": [],
   "author": "Mats Andreassen <mats.andreassen@vtfk.no> (https://github.com/matsand)",
@@ -20,6 +24,7 @@
   },
   "devDependencies": {
     "ava": "3.8.2",
+    "coveralls": "3.1.0",
     "standard": "14.3.4"
   }
 }
