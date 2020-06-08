@@ -84,9 +84,13 @@ Add a local `local.settings.json` file with this content:
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "",
-    "MONGODB_CONNECTION": "",
-    "MONGODB_DATABASE": "",
-    "MONGODB_COLLECTION": ""
+    "PAPERTRAIL_HOST": "",
+    "PAPERTRAIL_PORT": "",
+    "PAPERTRAIL_HOSTNAME": "",
+    "MONGODB_CONNECTION": "mongodb://username:password@server",
+    "MONGODB_DATABASE": "minelev",
+    "MONGODB_COLLECTION": "pifu",
+    "JWT_SECRET": "This is a very funny secret..."
   }
 }
 ```
