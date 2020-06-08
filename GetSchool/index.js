@@ -3,17 +3,17 @@ const { getSchool } = require('../lib/api/schools')
 
 const returnSchool = async function (context, req) {
   const caller = req.token.caller
-  const { schoolId } = context.bindingData
+  const { id } = context.bindingData
 
   try {
-    const schools = await getSchool(context, schoolId)
+    const schools = await getSchool(context, id)
 
-    context.log.info(['pifu-api', 'school', schoolId, caller, 'length', schools.length])
+    context.log.info(['pifu-api', 'school', id, caller, 'length', schools.length])
     context.res = {
       body: schools
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'school', schoolId, caller, 'error', error.message])
+    context.log.error(['pifu-api', 'school', id, caller, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

@@ -4,20 +4,20 @@ const { getStudents } = require('../lib/api/students')
 
 const returnSchool = async function (context, req) {
   const caller = req.token.caller
-  const { schoolId } = context.bindingData
+  const { id } = context.bindingData
 
   try {
-    const schools = await getSchool(context, schoolId)
+    const schools = await getSchool(context, id)
     const students = await getStudents(context, {
       schoolIds: schools[0].id
     })
 
-    context.log.info(['api', 'school', schoolId, 'students', caller, 'length', students.length])
+    context.log.info(['api', 'school', id, 'students', caller, 'length', students.length])
     context.res = {
       body: students
     }
   } catch (error) {
-    context.log.error(['api', 'school', schoolId, 'students', caller, 'error', error.message])
+    context.log.error(['api', 'school', id, 'students', caller, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message
