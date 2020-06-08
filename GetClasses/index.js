@@ -9,11 +9,11 @@ const returnClasses = async function (context, req) {
     if(!classes || classes.length <= 0) {
       context.res = {
         status: 404,
-        body: `No classes was found.`
+        body: `No classes found.`
       }
       return
     }
-    
+
     context.log.info(['api', 'classes', caller, 'length', classes.length])
     context.res = {
       body: classes

@@ -11,14 +11,14 @@ const returnClasses = async function (context, req) {
     if(!classes) {
       context.res = {
         status: 404,
-        body: `No classes was found: ${id}`
+        body: `Class not found: ${id}`
       }
       return
     }
 
     const teachers = await getTeachers(context, { groupIds: classes.id })
     context.log.info(['api', 'class', id, 'teachers', caller, 'length', teachers.length])
-    
+
     context.res = {
       body: teachers
     }

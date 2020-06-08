@@ -10,7 +10,7 @@ const returnClass = async function (context, req) {
     if(!classes) {
       context.res = {
         status: 404,
-        body: `No classes was found: ${id}`
+        body: `Class not found: ${id}`
       }
       return
     }
