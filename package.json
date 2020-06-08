@@ -13,6 +13,7 @@
   "dependencies": {
     "jsonwebtoken": "8.5.1",
     "mongodb": "3.5.8",
+    "vtfk-schools-info": "1.1.0",
     "winston": "3.2.1",
     "winston-papertrail": "1.0.5"
   }
