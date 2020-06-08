@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/vtfk/minelev-pifu-api.svg?branch=master)](https://travis-ci.com/vtfk/minelev-pifu-api)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-# minelev-pifu-api
+# azf-pifu-api
 
 Api service for MinElev, using data from [minelev-pifu-tools](https://github.com/telemark/minelev-pifu-tools)
 
