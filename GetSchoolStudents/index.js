@@ -19,14 +19,14 @@ const returnSchool = async function (context, req) {
 
     const students = await getStudents(context, { schoolIds: school.id })
 
-    context.log.info(['api', 'school', id, 'students', caller, 'length', students.length])
+    context.log.info(['pifu-api', 'school', id, 'students', caller, 'length', students.length])
 
     const repackedStudents = students.map((student) => repackStudent(context, student))
     context.res = {
       body: repackedStudents
     }
   } catch (error) {
-    context.log.error(['api', 'school', id, 'students', caller, 'error', error.message])
+    context.log.error(['pifu-api', 'school', id, 'students', caller, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

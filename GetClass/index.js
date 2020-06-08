@@ -15,12 +15,12 @@ const returnClass = async function (context, req) {
       return
     }
 
-    context.log.info(['api', 'class', id, caller, 'length', classes.length])
+    context.log.info(['pifu-api', 'class', id, caller, 'id', classes.id])
     context.res = {
       body: [classes]
     }
   } catch (error) {
-    context.log.error(['api', 'class', id, caller, 'error', error.message])
+    context.log.error(['pifu-api', 'class', id, caller, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message
