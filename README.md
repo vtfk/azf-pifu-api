@@ -21,19 +21,19 @@ Get a specific student
 
 Get all contact teacher for a given student
 
-### ```GET /teachers```
+### ```GET /teachers``` *
 
 Get all teachers
 
-### ```GET /teachers/{id}```
+### ```GET /teachers/{id}``` *
 
 Get a given teacher
 
-### ```GET /teachers/{id}/contactclasses```
+### ```GET /teachers/{id}/contactclasses``` *
 
 Get all contact classes for a given teacher
 
-### ```GET /teachers/{id}/students```
+### ```GET /teachers/{id}/students``` *
 
 Get all students for a given teacher
 
@@ -74,6 +74,8 @@ Get all students for a given school
 
 Returns pong
 
+Endpoints marked with a "**\***", is not implemented yet
+
 ## Development
 
 Add a local `local.settings.json` file with this content:
@@ -84,9 +86,6 @@ Add a local `local.settings.json` file with this content:
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "",
-    "PAPERTRAIL_HOST": "papertrails.com",
-    "PAPERTRAIL_PORT": "1234",
-    "PAPERTRAIL_HOSTNAME": "minelev-pifu-api",
     "MONGODB_CONNECTION": "mongodb://username:password@server",
     "MONGODB_DATABASE": "minelev",
     "MONGODB_COLLECTION": "pifu",
