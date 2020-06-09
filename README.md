@@ -29,7 +29,7 @@ Get all teachers
 
 Get a given teacher
 
-### ```GET /teachers/{id}/contactclasses``` *
+### ```GET /teachers/{id}/contactclasses```
 
 Get all contact classes for a given teacher
 
@@ -69,12 +69,9 @@ Get all teachers for a given school
 
 Get all students for a given school
 
-
 ### ```Get /ping```
 
 Returns pong
-
-Endpoints marked with a "**\***", is not implemented yet
 
 ## Development
 
