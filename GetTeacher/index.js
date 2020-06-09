@@ -18,7 +18,6 @@ const returnTeacher = async function (context, req) {
       return
     }
 
-    // Get intersecting groups between student and teacher
     context.log(['pifu-api', 'teacher', caller, 'get teacher', teacher.username])
     const repackedTeacher = repackTeacher(context, teacher)
     context.res = {
