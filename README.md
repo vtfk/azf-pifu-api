@@ -21,7 +21,7 @@ Get a specific student
 
 Get all contact teacher for a given student
 
-### ```GET /teachers``` *
+### ```GET /teachers```
 
 Get all teachers
 
