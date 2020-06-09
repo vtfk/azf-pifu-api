@@ -25,6 +25,8 @@ Get all contact teacher for a given student
 
 Get all teachers
 
+**Optional:** this also supports searching by name, by adding ``?name={name}``
+
 ### ```GET /teachers/{id}```
 
 Get a given teacher
