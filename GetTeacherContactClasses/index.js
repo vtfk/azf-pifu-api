@@ -1,7 +1,5 @@
 const withTokenAuth = require('../lib/token-auth')
-const { getStudents } = require('../lib/api/students')
 const { getTeacher } = require('../lib/api/teachers')
-const repackStudent = require('../lib/repack-student')
 const { getClasses } = require('../lib/api/classes')
 
 const returnTeacherStudents = async function (context, req) {

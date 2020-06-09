@@ -20,7 +20,7 @@ const returnStudents = async function (context, req) {
     }
 
     let teacher
-    if(caller) {
+    if (caller) {
       teacher = await getTeacher(context, caller)
       if (!teacher) {
         context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'teacher not found'])

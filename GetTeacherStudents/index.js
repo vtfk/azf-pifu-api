@@ -18,7 +18,6 @@ const returnTeacherStudents = async function (context, req) {
       }
       return
     }
-    
 
     // Get teachers matching the teacher class ids
     const students = await getStudents(context, {
