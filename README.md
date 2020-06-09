@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/vtfk/azf-pifu-api.svg?branch=master)](https://travis-ci.com/vtfk/azf-pifu-api)
+[![Coverage Status](https://coveralls.io/repos/github/vtfk/azf-pifu-api/badge.svg?branch=master)](https://coveralls.io/github/vtfk/azf-pifu-api?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 # azf-pifu-api
