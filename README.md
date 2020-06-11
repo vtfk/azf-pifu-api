@@ -12,7 +12,7 @@ All API calls needs an Authorization header with valid jwt
 
 ### ```GET /students?name={name}```
 
-Search all your students
+Search all **your** students
 
 ### ```GET /students/{id}```
 
