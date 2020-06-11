@@ -7,15 +7,6 @@ const returnStudents = async function (context, req) {
   const { caller } = req.token
   const { id } = context.bindingData
 
-  // Verify that we got a caller!
-  if (!caller) {
-    context.res = {
-      status: 403,
-      body: 'Couldn\'t read caller from token!'
-    }
-    return
-  }
-
   try {
     // Get students matching the provided username
     const student = await getStudent(context, id)
