@@ -48,8 +48,7 @@ const returnStudents = async function (context, req) {
     if (commonGroupIds.length === 0) {
       context.log(['pifu-api', 'student', caller, 'get student', id, 'student not related to teacher'])
       context.res = {
-        status: 401,
-        body: `Access denied to student: ${id}`
+        body: []
       }
       return
     }
