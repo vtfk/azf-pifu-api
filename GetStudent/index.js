@@ -7,7 +7,27 @@ const returnStudents = async function (context, req) {
   const { caller } = req.token
   const { id } = context.bindingData
 
+  // Verify that we got a caller!
+  if (!caller) {
+    context.res = {
+      status: 403,
+      body: 'Couldn\'t read caller from token!'
+    }
+    return
+  }
+
   try {
+    // Get teacher
+    const teacher = await getTeacher(context, caller)
+    if (!teacher) {
+      context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'teacher not found'])
+      context.res = {
+        status: 403,
+        body: `Teacher not found: ${caller}`
+      }
+      return
+    }
+
     // Get students matching the provided username
     const student = await getStudent(context, id)
     if (!student) {
@@ -19,17 +39,18 @@ const returnStudents = async function (context, req) {
       return
     }
 
-    let teacher
-    if (caller) {
-      teacher = await getTeacher(context, caller)
-      if (!teacher) {
-        context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'teacher not found'])
-        context.res = {
-          status: 403,
-          body: `Teacher not found: ${caller}`
-        }
-        return
+    // Get intersecting groups between student and teacher
+    const studentGroupIds = student.groupIds || []
+    const teacherGroupIds = teacher.groupIds || []
+    const commonGroupIds = [...teacherGroupIds].filter(groupId => studentGroupIds.includes(groupId))
+
+    // No - this aint my student!
+    if (commonGroupIds.length === 0) {
+      context.log(['pifu-api', 'student', caller, 'get student', id, 'student not related to teacher'])
+      context.res = {
+        body: []
       }
+      return
     }
 
     context.log(['pifu-api', 'student', caller, 'get student', student.username])
