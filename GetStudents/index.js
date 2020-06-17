@@ -38,8 +38,8 @@ const returnStudents = async function (context, req) {
 
     // Get students matching search and teacher classes
     const students = await getStudents(context, {
-      groupIds: { $in: teacher.groupIds },
-      fullName: { $regex: name.replace('*', '.*'), $options: 'i' }
+      fullName: { $regex: name.replace('*', '.*'), $options: 'i' },
+      groupIds: { $in: teacher.groupIds }
     })
 
     context.log(['pifu-api', 'students', caller, 'search by name', 'students', students.length])
