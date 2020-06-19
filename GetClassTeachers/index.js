@@ -11,7 +11,7 @@ const returnClasses = async function (context, req) {
     const classes = await getClass(context, id)
     if (!classes) {
       context.res = {
-        status: 404,
+        status: 403,
         body: `Class not found: ${id}`
       }
       return

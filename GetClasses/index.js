@@ -8,7 +8,7 @@ const returnClasses = async function (context, req) {
     const classes = await getClasses(context)
     if (!classes || classes.length <= 0) {
       context.res = {
-        status: 404,
+        status: 403,
         body: 'No classes found.'
       }
       return

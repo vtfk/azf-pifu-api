@@ -8,7 +8,7 @@ const returnSchools = async function (context, request) {
     const schools = await getSchools(context)
     if (!schools || schools.length <= 0) {
       context.res = {
-        status: 404,
+        status: 403,
         body: 'No schools found.'
       }
       return

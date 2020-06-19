@@ -13,7 +13,7 @@ const returnStudents = async function (context, req) {
     if (!student) {
       context.log.warn(['pifu-api', 'student', caller, 'get contactteachers', 'student not found', id])
       context.res = {
-        status: 404,
+        status: 403,
         body: `Student not found: ${id}`
       }
       return

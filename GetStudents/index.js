@@ -10,7 +10,7 @@ const returnStudents = async function (context, req) {
   // Verify that we got a caller!
   if (!caller) {
     context.res = {
-      status: 403,
+      status: 401,
       body: 'Couldn\'t read caller from token!'
     }
     return
@@ -22,7 +22,7 @@ const returnStudents = async function (context, req) {
     if (!teacher) {
       context.log.warn(['pifu-api', 'students', caller, 'search by name', 'teacher not found'])
       context.res = {
-        status: 403,
+        status: 401,
         body: `Teacher not found: ${caller}`
       }
       return

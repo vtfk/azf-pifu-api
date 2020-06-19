@@ -10,7 +10,7 @@ const returnStudents = async function (context, req) {
   // Verify that we got a caller!
   if (!caller) {
     context.res = {
-      status: 403,
+      status: 401,
       body: 'Couldn\'t read caller from token!'
     }
     return
@@ -22,7 +22,7 @@ const returnStudents = async function (context, req) {
     if (!teacher) {
       context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'teacher not found'])
       context.res = {
-        status: 403,
+        status: 401,
         body: `Teacher not found: ${caller}`
       }
       return
@@ -33,7 +33,7 @@ const returnStudents = async function (context, req) {
     if (!student) {
       context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'student not found', id])
       context.res = {
-        status: 404,
+        status: 403,
         body: `Student not found: ${id}`
       }
       return
@@ -48,7 +48,7 @@ const returnStudents = async function (context, req) {
     if (commonGroupIds.length === 0) {
       context.log(['pifu-api', 'student', caller, 'get student', id, 'student not related to teacher'])
       context.res = {
-        status: 401,
+        status: 403,
         body: []
       }
       return
