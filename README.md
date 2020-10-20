@@ -20,6 +20,10 @@ Get all my students
 
 Filter students by providing a name in the `name` property, example: `/me/students?name=Rasmus`
 
+### ```GET /me/classes```
+
+Get all my classes
+
 ---
 
 ### ```GET /students?name={name}```
