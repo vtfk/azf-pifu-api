@@ -14,6 +14,12 @@ All API calls needs an Authorization header with valid jwt
 
 Get my teacher object
 
+### ```GET /me/students```
+
+Get all my students
+
+Filter students by providing a name in the `name` property, example: `/me/students?name=Rasmus`
+
 ---
 
 ### ```GET /students?name={name}```
