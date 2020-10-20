@@ -24,6 +24,10 @@ Filter students by providing a name in the `name` property, example: `/me/studen
 
 Get all my classes
 
+### ```GET /me/schools```
+
+Get all my schools
+
 ---
 
 ### ```GET /students?name={name}```
