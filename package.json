@@ -1,7 +1,7 @@
 {
   "name": "azf-pifu-api",
   "version": "1.0.3",
-  "description": "PIFU API for MinElev",
+  "description": "PIFU API v2 for MinElev",
   "main": "index.js",
   "scripts": {
     "start": "func start",
