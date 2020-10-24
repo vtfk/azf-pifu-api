@@ -10,6 +10,26 @@ Api service for MinElev, using data from [minelev-pifu-tools](https://github.com
 
 All API calls needs an Authorization header with valid jwt  
 
+### ```GET /me```
+
+Get my teacher object
+
+### ```GET /me/students```
+
+Get all my students
+
+Filter students by providing a name in the `name` property, example: `/me/students?name=Rasmus`
+
+### ```GET /me/classes```
+
+Get all my classes
+
+### ```GET /me/schools```
+
+Get all my schools
+
+---
+
 ### ```GET /students?name={name}```
 
 Search all **your** students
