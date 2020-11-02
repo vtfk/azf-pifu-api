@@ -27,12 +27,13 @@ const returnStudents = async function (context, req) {
     context.log(['pifu-api', 'students', caller, 'get contactteachers', student.username])
     const repackedTeachers = teachers.map((teacher) => repackTeacher(context, teacher))
 
-    // Mark student contact teachers
     const { kontaktlarergruppeIds, ordenIds, atferdIds } = student
     const kontaktIds = [...kontaktlarergruppeIds, ...ordenIds, ...atferdIds]
 
+    // Mark student contact teachers and get related group ids
     const contactTeachers = repackedTeachers.map(teacher => {
       teacher.contactTeacher = teacher.groupIds.some(id => kontaktIds.includes(id))
+      teacher.relatedGroupIds = teacher.groupIds.filter(id => student.groupIds.includes(id))
       return teacher
     })
 
