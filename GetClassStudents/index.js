@@ -6,7 +6,8 @@ const { getTeacher } = require('../lib/api/teachers')
 
 const returnClasses = async function (context, req) {
   const caller = req.token.caller
-  const { id } = context.bindingData
+  const { id: rawId } = context.bindingData
+  const id = decodeURIComponent(rawId)
 
   if (!caller) {
     context.res = {
