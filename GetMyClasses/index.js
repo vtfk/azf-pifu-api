@@ -37,7 +37,8 @@ const returnClasses = async function (context, req) {
 
     // Get classes matching teacher groupIds
     const classes = await getClasses(context, {
-      id: { $in: teacher.groupIds }
+      id: { $in: teacher.groupIds },
+      type: { $in: ['basisgruppe', 'undervisningsgruppe'] }
     })
 
     context.log(['pifu-api', 'my-classes', caller, 'classes', classes.length])

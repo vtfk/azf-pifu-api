@@ -42,7 +42,10 @@ const returnStudentClasses = async function (context, req) {
 
     // Get student classes
     const studentGroupIds = student.groupIds || []
-    const classes = await getClasses(context, { id: { $in: studentGroupIds }, type: 'fag' }) || []
+    const classes = await getClasses(context, {
+      id: { $in: studentGroupIds },
+      type: { $in: ['basisgruppe', 'undervisningsgruppe'] }
+    }) || []
 
     context.log(['pifu-api', 'student', caller, 'get student classes', student.username, classes.length])
     const repackedGroups = classes.map(groups => repackClassMembers(groups))
