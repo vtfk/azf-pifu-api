@@ -1,12 +1,13 @@
 const withTokenAuth = require('../lib/token-auth')
 const { getClass } = require('../lib/api/classes')
 const { getTeachers } = require('../lib/api/teachers')
+const { decode } = require('../lib/decode-uri-id')
 const repackTeacher = require('../lib/repack-teacher')
 
 const returnClasses = async function (context, req) {
   const caller = req.token.caller
   const { id: rawId } = context.bindingData
-  const id = decodeURIComponent(rawId)
+  const id = decode(rawId)
 
   try {
     const classes = await getClass(context, id)
