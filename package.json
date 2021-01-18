@@ -1,7 +1,7 @@
 {
   "name": "azf-pifu-api",
-  "version": "1.0.3",
-  "description": "PIFU API for MinElev",
+  "version": "2.0.0",
+  "description": "PIFU API v2 for MinElev",
   "main": "index.js",
   "scripts": {
     "start": "func start",
@@ -10,7 +10,9 @@
     "coverage": "nyc ava",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "standard-fix": "standard --fix",
-    "refresh": "rm -rf node_modules && rm package-lock.json && npm install"
+    "refresh": "rm -rf node_modules && rm package-lock.json && npm install",
+    "publish:test": "func azure functionapp publish test-func-pifu-v2",
+    "publish:prod": "func azure functionapp publish prod-func-pifu-v2"
   },
   "keywords": [],
   "author": "Mats Andreassen <mats.andreassen@vtfk.no> (https://github.com/matsand)",
