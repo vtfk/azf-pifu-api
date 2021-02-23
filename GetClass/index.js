@@ -20,15 +20,6 @@ const returnClass = async function (context, req) {
   try {
     // Get teacher
     const teacher = await getTeacher(context, caller)
-    if (!teacher) {
-      context.log.warn(['pifu-api', 'classes', caller, 'get class', id, 'teacher not found'])
-      context.res = {
-        status: 401,
-        body: `Teacher not found: ${caller}`
-      }
-      return
-    }
-
     const classes = await getClass(context, id)
     if (!classes) {
       context.log.warn(['pifu-api', 'classes', caller, 'get class', id, 'class not found'])
@@ -39,7 +30,7 @@ const returnClass = async function (context, req) {
       return
     }
 
-    if (!teacher.groupIds.includes(classes.id)) {
+    if (!teacher || !teacher.groupIds.includes(classes.id)) {
       context.log(['pifu-api', 'classes', caller, 'get class', id, 'teacher not related to group, but returning groups with hidden members'])
 
       const repackedClass = repackClasses(classes)
