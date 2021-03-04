@@ -10,6 +10,9 @@ const returnClasses = async function (context, req) {
   const { id: rawId } = context.bindingData
   const id = decode(rawId)
 
+  const { all } = req.query
+  const noLimits = `${all}`.toLowerCase() === 'true'
+
   if (!caller) {
     context.res = {
       status: 401,
@@ -21,7 +24,7 @@ const returnClasses = async function (context, req) {
   try {
     // Get teacher
     const teacher = await getTeacher(context, caller)
-    if (!teacher) {
+    if (!noLimits && !teacher) {
       context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'teacher not found'])
       context.res = {
         status: 401,
@@ -43,9 +46,16 @@ const returnClasses = async function (context, req) {
     const students = await getStudents(context, { groupIds: classes.id })
     context.log.info(['pifu-api', 'class', id, 'students', caller, 'length', students.length])
 
+    // If we want to get all users without current user restrictions, return everything
+    if (noLimits) {
+      const repackedStudents = students.map((student) => repackStudent(context, student))
+      context.log.info(['pifu-api', 'class', id, 'students', caller, 'returning all students without limitations'])
+      context.res = { body: repackedStudents }
+      return
+    }
+
     // Get students the teacher have relation
     const teacherStudents = students.filter(student => student.groupIds && student.groupIds.includes(classes.id) && student.groupIds.some(groupId => teacher.groupIds.includes(groupId)))
-
     if (teacherStudents.length === 0 && !teacher.groupIds.includes(classes.id)) {
       context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'teacher not related to group'])
       context.res = {
