@@ -70,7 +70,9 @@ Get a given class
 
 ### ```GET /classes/{id}/students```
 
-Get all students in a class
+Get all students in a class the teacher has a relationship to.
+
+If you want to get all students, regarding of who the current caller/teacher is, set the `all` query parameter to `true`.
 
 ### ```GET /classes/{id}/teachers```
 
