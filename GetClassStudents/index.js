@@ -54,7 +54,7 @@ const returnClasses = async function (context, req) {
       return
     }
 
-    // Get students the teacher have relation
+    // Get students the teacher have a relation to
     const teacherStudents = students.filter(student => student.groupIds && student.groupIds.includes(classes.id) && student.groupIds.some(groupId => teacher.groupIds.includes(groupId)))
     if (teacherStudents.length === 0 && !teacher.groupIds.includes(classes.id)) {
       context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'teacher not related to group'])
