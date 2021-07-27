@@ -19,8 +19,12 @@ const returnStudents = async function (context, req) {
       return
     }
 
-    const { kontaktlarergruppeIds, ordenIds, atferdIds } = student
-    const kontaktIds = [...kontaktlarergruppeIds, ...ordenIds, ...atferdIds]
+    // TODO: Må byttes ut med en annen måte for å identifisere kontaktlærer
+    // const { kontaktlarergruppeIds, ordenIds, atferdIds } = student
+    const { kontaktlarergruppeIds } = student
+    // const kontaktIds = [...kontaktlarergruppeIds, ...ordenIds, ...atferdIds]
+    const kontaktIds = kontaktlarergruppeIds
+    console.log('kontaktIds:', kontaktIds)
 
     // Get teachers matching the contact class ids
     const teachers = await getTeachers(context, {
