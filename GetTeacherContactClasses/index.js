@@ -31,7 +31,7 @@ const returnTeacherStudents = async function (context, req) {
     })
 
     context.log(['pifu-api', 'teacher', caller, 'get contactclasses', classes.length])
-    const classIds = classes.map(group => ({ Id: group.groupId }))
+    const classIds = classes.filter(group => group.type !== 'kontaktlarergruppe').map(group => ({ Id: group.groupId }))
     context.res = {
       body: classIds
     }
