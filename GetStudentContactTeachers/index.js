@@ -19,12 +19,12 @@ const returnStudents = async function (context, req) {
       return
     }
 
-    const { kontaktlarergruppeIds, ordenIds, atferdIds } = student
-    const kontaktIds = [...kontaktlarergruppeIds, ...ordenIds, ...atferdIds]
+    const { kontaktlarergruppeIds } = student
+    console.log('kontaktlarergruppeIds:', kontaktlarergruppeIds)
 
     // Get teachers matching the contact class ids
     const teachers = await getTeachers(context, {
-      groupIds: { $in: kontaktIds }
+      groupIds: { $in: kontaktlarergruppeIds }
     })
 
     context.log(['pifu-api', 'students', caller, 'get contactteachers', student.username])
