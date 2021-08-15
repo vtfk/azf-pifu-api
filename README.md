@@ -42,6 +42,8 @@ Get a specific student
 
 Get all contact teacher for a given student
 
+**Optional:** this also supports adding `?kontaktlarergruppe=true` to retrieve **only** kontaktlærergrupper for this teacher
+
 ### ```GET /teachers```
 
 Get all teachers

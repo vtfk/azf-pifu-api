@@ -4,6 +4,7 @@ const { getClasses } = require('../lib/api/classes')
 
 const returnTeacherStudents = async function (context, req) {
   const { caller } = req.token
+  const kontaktlarergruppe = (req.query.kontaktlarergruppe && req.query.kontaktlarergruppe.toLowerCase() === 'true') || false
   const { id } = context.bindingData
 
   try {
@@ -30,8 +31,18 @@ const returnTeacherStudents = async function (context, req) {
       memberIds: teacher.id
     })
 
-    context.log(['pifu-api', 'teacher', caller, 'get contactclasses', classes.length])
-    const classIds = classes.filter(group => group.type !== 'kontaktlarergruppe').map(group => ({ Id: group.groupId }))
+    context.log(['pifu-api', 'teacher', caller, 'get contactclasses', 'classes', classes.length])
+    const classIds = classes.filter(group => {
+      if (!kontaktlarergruppe) return group.type !== 'kontaktlarergruppe'
+      else return group.type === 'kontaktlarergruppe'
+    }).map(group => {
+      if (!kontaktlarergruppe) return { Id: group.groupId }
+      else return {
+        Id: group.name,
+        SchoolName: group.schoolName
+      }
+    })
+    context.log(['pifu-api', 'teacher', caller, 'get contactclasses', 'contactclasses', classIds.length])
     context.res = {
       body: classIds
     }
