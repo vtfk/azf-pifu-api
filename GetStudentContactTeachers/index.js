@@ -20,7 +20,6 @@ const returnStudents = async function (context, req) {
     }
 
     const { kontaktlarergruppeIds } = student
-    console.log('kontaktlarergruppeIds:', kontaktlarergruppeIds)
 
     // Get teachers matching the contact class ids
     const teachers = await getTeachers(context, {
