@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getClass } = require('../lib/api/classes')
 const { getTeachers } = require('../lib/api/teachers')
@@ -5,7 +6,6 @@ const { decode } = require('../lib/decode-uri-id')
 const repackTeacher = require('../lib/repack-teacher')
 
 const returnClasses = async function (context, req) {
-  const caller = req.token.caller
   const { id: rawId } = context.bindingData
   const id = decode(rawId)
 
@@ -20,14 +20,14 @@ const returnClasses = async function (context, req) {
     }
 
     const teachers = await getTeachers(context, { groupIds: classes.id })
-    context.log.info(['pifu-api', 'class', id, 'teachers', caller, 'length', teachers.length])
+    logger('info', ['pifu-api', 'class', id, 'teachers', 'length', teachers.length])
 
     const repackedTeachers = teachers.map((teacher) => repackTeacher(context, teacher))
     context.res = {
       body: repackedTeachers
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'class', id, 'teachers', caller, 'error', error.message])
+    logger('error', ['pifu-api', 'class', id, 'teachers', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

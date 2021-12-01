@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getClass } = require('../lib/api/classes')
 const { getStudents } = require('../lib/api/students')
@@ -25,7 +26,7 @@ const returnClasses = async function (context, req) {
     // Get teacher
     const teacher = await getTeacher(context, caller)
     if (!noLimits && !teacher) {
-      context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'teacher not found'])
+      logger('warn', ['pifu-api', 'classes', 'students', id, 'teacher not found'])
       context.res = {
         status: 401,
         body: `Teacher not found: ${caller}`
@@ -35,7 +36,7 @@ const returnClasses = async function (context, req) {
 
     const classes = await getClass(context, id)
     if (!classes) {
-      context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'class not found'])
+      logger('warn', ['pifu-api', 'classes', 'students', id, 'class not found'])
       context.res = {
         status: 403,
         body: []
@@ -44,12 +45,12 @@ const returnClasses = async function (context, req) {
     }
 
     const students = await getStudents(context, { groupIds: classes.id })
-    context.log.info(['pifu-api', 'class', id, 'students', caller, 'length', students.length])
+    logger('info', ['pifu-api', 'class', id, 'students', 'length', students.length])
 
     // If we want to get all users without current user restrictions, return everything
     if (noLimits) {
       const repackedStudents = students.map((student) => repackStudent(context, student))
-      context.log.info(['pifu-api', 'class', id, 'students', caller, 'returning all students without limitations'])
+      logger('info', ['pifu-api', 'class', id, 'students', 'returning all students without limitations'])
       context.res = { body: repackedStudents }
       return
     }
@@ -57,7 +58,7 @@ const returnClasses = async function (context, req) {
     // Get students the teacher have a relation to
     const teacherStudents = students.filter(student => student.groupIds && student.groupIds.includes(classes.id) && student.groupIds.some(groupId => teacher.groupIds.includes(groupId)))
     if (teacherStudents.length === 0 && !teacher.groupIds.includes(classes.id)) {
-      context.log.warn(['pifu-api', 'classes', caller, 'students', id, 'teacher not related to group'])
+      logger('warn', ['pifu-api', 'classes', 'students', id, 'teacher not related to group'])
       context.res = {
         status: 403,
         body: []
@@ -70,7 +71,7 @@ const returnClasses = async function (context, req) {
       body: repackedStudents
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'class', id, 'students', caller, 'error', error.message])
+    logger('error', ['pifu-api', 'class', id, 'students', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

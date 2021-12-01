@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getStudents } = require('../lib/api/students')
 const { getTeacher } = require('../lib/api/teachers')
@@ -20,7 +21,7 @@ const returnStudents = async function (context, req) {
     // Get teacher from caller
     const teacher = await getTeacher(context, caller)
     if (!teacher) {
-      context.log.warn(['pifu-api', 'my-students', caller, 'teacher not found'])
+      logger('warn', ['pifu-api', 'my-students', 'teacher not found'])
       context.res = {
         status: 403,
         body: `Teacher not found: ${caller}`
@@ -29,7 +30,7 @@ const returnStudents = async function (context, req) {
     }
 
     if (!teacher.groupIds || teacher.groupIds.length === 0) {
-      context.log.warn(['pifu-api', 'my-students', caller, 'teacher has no group'])
+      logger('warn', ['pifu-api', 'my-students', 'teacher has no group'])
       context.res = {
         body: []
       }
@@ -42,14 +43,14 @@ const returnStudents = async function (context, req) {
       groupIds: { $in: teacher.groupIds }
     })
 
-    context.log(['pifu-api', 'my-students', caller, 'search', name, 'students', students.length])
+    logger('info', ['pifu-api', 'my-students', 'search', name, 'students', students.length])
 
     const repackedStudents = students.map((student) => repackStudent(context, student, teacher))
     context.res = {
       body: repackedStudents
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'my-students', caller, 'search', name, 'error', error.message])
+    logger('error', ['pifu-api', 'my-students', 'search', name, 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

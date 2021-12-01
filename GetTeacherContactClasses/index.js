@@ -1,9 +1,9 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getTeacher } = require('../lib/api/teachers')
 const { getClasses } = require('../lib/api/classes')
 
 const returnTeacherStudents = async function (context, req) {
-  const { caller } = req.token
   const kontaktlarergruppe = (req.query.kontaktlarergruppe && req.query.kontaktlarergruppe.toLowerCase() === 'true') || false
   const { id } = context.bindingData
 
@@ -11,7 +11,7 @@ const returnTeacherStudents = async function (context, req) {
     // Get teacher matching the provided username
     const teacher = await getTeacher(context, id)
     if (!teacher) {
-      context.log.warn(['pifu-api', 'teacher', caller, 'get contactclasses', 'teacher not found', id])
+      logger('warn', ['pifu-api', 'teacher', 'get contactclasses', 'teacher not found', id])
       context.res = {
         body: []
       }
@@ -19,7 +19,7 @@ const returnTeacherStudents = async function (context, req) {
     }
 
     if (!teacher.groupIds || teacher.groupIds.length === 0) {
-      context.log.warn(['pifu-api', 'teacher', caller, 'get contactclasses', 'teacher has no groups', id])
+      logger('warn', ['pifu-api', 'teacher', 'get contactclasses', 'teacher has no groups', id])
       context.res = {
         body: []
       }
@@ -31,7 +31,7 @@ const returnTeacherStudents = async function (context, req) {
       memberIds: teacher.id
     })
 
-    context.log(['pifu-api', 'teacher', caller, 'get contactclasses', 'classes', classes.length])
+    logger('info', ['pifu-api', 'teacher', 'get contactclasses', 'classes', classes.length])
     const classIds = classes.filter(group => {
       if (!kontaktlarergruppe) return group.type !== 'kontaktlarergruppe'
       else return group.type === 'kontaktlarergruppe'
@@ -44,12 +44,12 @@ const returnTeacherStudents = async function (context, req) {
         }
       }
     })
-    context.log(['pifu-api', 'teacher', caller, 'get contactclasses', 'contactclasses', classIds.length])
+    logger('info', ['pifu-api', 'teacher', 'get contactclasses', 'contactclasses', classIds.length])
     context.res = {
       body: classIds
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'teacher', caller, 'get contactclasses', 'error', error.message])
+    logger('error', ['pifu-api', 'teacher', 'get contactclasses', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

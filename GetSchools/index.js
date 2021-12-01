@@ -1,9 +1,8 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getSchools } = require('../lib/api/schools')
 
 const returnSchools = async function (context, request) {
-  const caller = request.token.caller
-
   try {
     const schools = await getSchools(context)
     if (!schools || schools.length <= 0) {
@@ -14,12 +13,12 @@ const returnSchools = async function (context, request) {
       return
     }
 
-    context.log(['pifu-api', 'schools', caller, 'length', schools.length])
+    logger('info', ['pifu-api', 'schools', 'length', schools.length])
     context.res = {
       body: schools
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'schools', caller, 'error', error.message])
+    logger('error', ['pifu-api', 'schools', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

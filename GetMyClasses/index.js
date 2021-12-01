@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const repackClasses = require('../lib/repack-class-members')
 const { getTeacher } = require('../lib/api/teachers')
@@ -19,7 +20,7 @@ const returnClasses = async function (context, req) {
     // Get teacher from caller
     const teacher = await getTeacher(context, caller)
     if (!teacher) {
-      context.log.warn(['pifu-api', 'my-classes', caller, 'teacher not found'])
+      logger('warn', ['pifu-api', 'my-classes', 'teacher not found'])
       context.res = {
         status: 403,
         body: `Teacher not found: ${caller}`
@@ -28,7 +29,7 @@ const returnClasses = async function (context, req) {
     }
 
     if (!teacher.groupIds || teacher.groupIds.length === 0) {
-      context.log.warn(['pifu-api', 'my-classes', caller, 'teacher has no group'])
+      logger('warn', ['pifu-api', 'my-classes', 'teacher has no group'])
       context.res = {
         body: []
       }
@@ -41,14 +42,14 @@ const returnClasses = async function (context, req) {
       type: { $in: ['basisgruppe', 'undervisningsgruppe'] }
     })
 
-    context.log(['pifu-api', 'my-classes', caller, 'classes', classes.length])
+    logger('info', ['pifu-api', 'my-classes', 'classes', classes.length])
 
     const repackedClasses = classes.map(repackClasses)
     context.res = {
       body: repackedClasses
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'my-classes', caller, 'error', error.message])
+    logger('error', ['pifu-api', 'my-classes', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getTeacher } = require('../lib/api/teachers')
 const { getSchools } = require('../lib/api/schools')
@@ -18,7 +19,7 @@ const returnSchools = async function (context, req) {
     // Get teacher from caller
     const teacher = await getTeacher(context, caller)
     if (!teacher) {
-      context.log.warn(['pifu-api', 'my-schools', caller, 'teacher not found'])
+      logger('warn', ['pifu-api', 'my-schools', 'teacher not found'])
       context.res = {
         status: 403,
         body: `Teacher not found: ${caller}`
@@ -27,7 +28,7 @@ const returnSchools = async function (context, req) {
     }
 
     if (!teacher.schoolIds || teacher.schoolIds.length === 0) {
-      context.log.warn(['pifu-api', 'my-schools', caller, 'teacher has no school relation'])
+      logger('warn', ['pifu-api', 'my-schools', 'teacher has no school relation'])
       context.res = {
         body: []
       }
@@ -39,13 +40,13 @@ const returnSchools = async function (context, req) {
       id: { $in: teacher.schoolIds }
     })
 
-    context.log(['pifu-api', 'my-schools', caller, 'schools', schools.length])
+    logger('info', ['pifu-api', 'my-schools', 'schools', schools.length])
 
     context.res = {
       body: schools
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'my-schools', caller, 'error', error.message])
+    logger('error', ['pifu-api', 'my-schools', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message

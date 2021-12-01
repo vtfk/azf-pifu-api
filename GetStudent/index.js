@@ -1,3 +1,4 @@
+const { logger } = require('@vtfk/logger')
 const withTokenAuth = require('../lib/token-auth')
 const { getStudent } = require('../lib/api/students')
 const { getTeacher } = require('../lib/api/teachers')
@@ -20,7 +21,7 @@ const returnStudents = async function (context, req) {
     // Get teacher
     const teacher = await getTeacher(context, caller)
     if (!teacher) {
-      context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'teacher not found'])
+      logger('warn', ['pifu-api', 'student', 'get student', id, 'teacher not found'])
       context.res = {
         status: 401,
         body: `Teacher not found: ${caller}`
@@ -31,7 +32,7 @@ const returnStudents = async function (context, req) {
     // Get students matching the provided username
     const student = await getStudent(context, id)
     if (!student) {
-      context.log.warn(['pifu-api', 'student', caller, 'get student', id, 'student not found', id])
+      logger('warn', ['pifu-api', 'student', 'get student', id, 'student not found', id])
       context.res = {
         status: 403,
         body: `Student not found: ${id}`
@@ -46,7 +47,7 @@ const returnStudents = async function (context, req) {
 
     // No - this aint my student!
     if (commonGroupIds.length === 0) {
-      context.log(['pifu-api', 'student', caller, 'get student', id, 'student not related to teacher'])
+      logger('info', ['pifu-api', 'student', 'get student', id, 'student not related to teacher'])
       context.res = {
         status: 403,
         body: []
@@ -54,13 +55,13 @@ const returnStudents = async function (context, req) {
       return
     }
 
-    context.log(['pifu-api', 'student', caller, 'get student', student.username])
+    logger('info', ['pifu-api', 'student', 'get student', student.username])
     const repackedStudent = repackStudent(context, student, teacher)
     context.res = {
       body: [repackedStudent]
     }
   } catch (error) {
-    context.log.error(['pifu-api', 'student', caller, 'get student', 'error', error.message])
+    logger('error', ['pifu-api', 'student', 'get student', 'error', error.message])
     context.res = {
       status: 500,
       body: error.message
