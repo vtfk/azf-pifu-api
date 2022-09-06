@@ -11,7 +11,7 @@ All API calls needs an Authorization header with valid jwt
 
 ### ```GET /me```
 
-Get my teacher object
+Get my teacher or student object
 
 ### ```GET /me/students```
 
