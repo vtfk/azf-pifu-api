@@ -20,7 +20,7 @@
   "dependencies": {
     "@vtfk/logger": "4.0.1",
     "jsonwebtoken": "8.5.1",
-    "mongodb": "3.7.4",
+    "mongodb": "6.10.0",
     "vtfk-schools-info": "^3.4.0"
   },
   "devDependencies": {
